@@ -1,23 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import Todo from "./Todo"
+import {useState, useEffect} from "react"
 
 function App() {
+  const[todos, setTodos] = useState([]);
+  const[count, setCount] = useState();
+  const url = "https://api.mocki.io/v1/b043df5a"
+
+  useEffect(async () => {
+    const response = await fetch(url);
+    const data = await response.json();
+    setTodos(data);
+    console.log(todos);
+
+  },[])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1> Hello World </h1>
+      {todos.map((todo) => <h4> {todo.name} <p> </p>{todo.city} </h4>)}
     </div>
   );
 }
