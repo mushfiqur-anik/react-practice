@@ -1,42 +1,45 @@
 import {useState, useEffect} from "react"
 
-
-
-
+let isH = true;
+let count = 0;
 function App() {
   const[todos, setTodos] = useState([]);
-  const[count, setCount] = useState();
+  const[isOdd, setIsOdd] = useState(true);
   const url = "./List.json"
 
-  const list = [
-    {   
-        "header": "Header 1",
-        "img": "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixid=MXwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2689&q=80",
-        "description": "This is the best looking furniture ever. Beautiful"
-    },
-    {   
-        "header": "Header 2",
-        "img": "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixid=MXwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2689&q=80",
-        "description": "This is the best looking furniture ever. Lovely"
-    },
-    {   
-        "header": "Header 3",
-        "img": "https://images.unsplash.com/photo-1593642632823-8f785ba67e45?ixid=MXwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=2689&q=80",
-        "description": "This is the best looking furniture ever. Amazing"
+  const Conditional = ({todo}) => {
+
+    if(isH) {
+      
+      return <h4> {todo.header} <p> <img height="200" width="100" src={todo.img} /></p>{todo.description} </h4>
     }
-]
+    
+    return <h4> {todo.header} <p> Yo <img height="200" width="100" src={todo.img} /></p>{todo.description} </h4>
+
+  }
+
   useEffect(async () => {
     const response = await fetch(url);
     const data = await response.json();
     setTodos(data);
-    console.log(list);
-
   },[])
 
+// <h4> {todo.header} <p> <img height="200" width="100" src={todo.img} /></p>{todo.description} </h4>
   return (
     <div className="App">
       <h1> Hello World </h1>
-      {todos.map((todo) => <h4> {todo.header} <p> <img height="200" width="100" src={todo.img} /></p>{todo.description} </h4>)}
+
+      {todos.map(todo => { 
+        count++;
+        
+        return count % 2 == 0 ? 
+           <h4> {todo.header} <p> <img height="300" width="400" src={todo.img} /></p>{todo.description} </h4> : 
+           <h4> {todo.header} <p> n<img height="200" width="100" src={todo.img} /></p>{todo.description} </h4>
+      }
+
+
+      
+       )}
     </div>
   );
 }
